@@ -1,0 +1,7 @@
+---
+- name: Services Task17
+  hosts: webservers
+  become: yes
+  tasks:
+  - name: change the default target to multi user
+    command: "systemctl set-default multi-user.target"

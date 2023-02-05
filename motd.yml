@@ -1,0 +1,32 @@
+---
+  - name: add text to /etc/motd file proxy task 3
+    hosts: proxy
+    become: yes
+    tasks:
+    - copy:
+         content: "Welcome to HAProxy server\n"
+         dest: /etc/motd
+#    - blockinfile:
+#         path: /etc/motd
+#         block: |
+#           Welcome to HAProxy server
+
+  - name: add text to /etc/motd file web 
+    hosts: webservers 
+    become: yes
+    tasks:
+    - copy:
+         content: "Welcome to Apache server\n"
+         dest: /etc/motd
+#    - blockinfile:
+#         path: /etc/motd
+#         block: |
+#          Welcome to Apache server
+
+  - name: add text to /etc/motd file database
+    hosts: database
+    become: yes
+    tasks:
+    - copy:
+         content: "Welcome to MySQL server\n"
+         dest: /etc/motd

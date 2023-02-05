@@ -1,0 +1,12 @@
+---
+- name: stam
+  hosts: webservers
+  tasks:
+  - block:
+    - name: stam1
+      debug:
+        msg: "lalalal {{ omit }}"
+    - name: stam2
+      debug:
+        msg: lalalalalalala
+    when: ansible_facts['os_family'] == "RedHat"

@@ -1,0 +1,18 @@
+---
+- hosts: proxy
+  become: yes
+  gather_facts: yes
+  roles:
+    - role: geerlingguy.haproxy
+      vars:
+        haproxy_beckend:
+          - name: webservers
+            servers:
+              - name: automation
+                address: 10.0.2.8:80
+              - name: automation
+                address: 10.0.2.9:80
+
+        haproxy_beckend_balance_method: "roundrobin"
+        haproxy_beckend_port: 80
+        haproxy_frontend_mode: http

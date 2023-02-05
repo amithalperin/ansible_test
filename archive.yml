@@ -1,0 +1,19 @@
+---
+- name: Use Archiving Task14
+  hosts: database
+  become: yes
+  tasks:
+    - name: mkdir
+      file:
+        path: /mnt/mysql_backups
+        state: directory
+        owner: automation
+        group: automation
+        mode: '0755'
+    - name: insert the line
+      shell: echo "dev,test,qa,prod" > /mnt/mysql_backups/database_list.txt
+    - name: archive the file
+      archive: 
+        path: /mnt/mysql_backups/database_list.txt
+        dest: /mnt/mysql_backups/archive.gz
+        format: gz

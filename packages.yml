@@ -1,0 +1,22 @@
+---
+- name: Software Packages proxy Task16
+  hosts: proxy
+  become: yes
+  tasks:
+  - name: installation
+    package:
+      name:
+        - tcpdump
+        - mailx
+      state: latest
+
+- name: Software Packages database Task16
+  hosts: database
+  become: yes
+  tasks:
+  - name: installation
+    package:
+      name:
+        - lsof
+        - mailx
+      state: latest

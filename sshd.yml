@@ -1,0 +1,25 @@
+#task4
+---
+- name: cnf ssh server
+  hosts: all
+  become: true
+  tasks:
+  - name: set banner
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: "^Banner"
+      line: "Banner /etc/motd"
+  - name: x11forwarding disabled
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: "^X11Forwarding"
+      line: "X11Forwarding no"
+  - name: max connection tries
+    lineinfile:
+      path: /etc/ssh/sshd_config
+      regexp: "^MaxAuthTries"
+      line: "MaxAuthTries 3"
+  - name: reload sshd_config
+    service:
+      name: sshd
+      state: reloaded

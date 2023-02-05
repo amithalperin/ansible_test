@@ -1,0 +1,20 @@
+---
+- name: setup
+  hosts: all
+  tasks:
+  - name:
+    setup:
+
+- name: Task18
+  hosts: database 
+  gather_facts: yes
+  become: yes
+  tasks:
+  - name: temp
+    template:
+      src: templates/server_list.j2 
+      dest: /etc/server_list.txt
+      owner: automation
+      group: automation
+      mode: '0600'
+      setype: net_conf_t

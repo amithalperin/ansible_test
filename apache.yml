@@ -1,0 +1,8 @@
+---
+#Task10
+- name: use sample-apache role
+  hosts: webservers
+  become: yes
+# gather_facts: yes
+  roles:
+    - sample-apache

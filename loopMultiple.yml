@@ -1,0 +1,14 @@
+---
+- name: stam
+  hosts: proxy
+  tasks:
+    - name: stam2
+      include_tasks: debug.yml
+      when: out_item > 2
+      loop:
+        - 1
+        - 2
+        - 3
+        - 4
+      loop_control:
+        loop_var: out_item

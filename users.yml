@@ -1,0 +1,99 @@
+#task6
+#run with --vault-passwors-file vault_key
+---
+- name: Users and Groups
+  hosts: webservers
+  become: yes
+
+  tasks: 
+# - name: includes1
+  - include_vars: vars/user_list.yml
+  - include_vars: secret.yml
+# - name: includes2
+#   include_vars: secret.yml
+# - name: stam
+#   debug:
+#     msg: stam, {{ user_password }}
+#   loop:
+#     "{{ users }}"
+  - name: add users1
+    user:
+      name: "{{ item.username }}"
+      uid: "{{ item.uid }}"
+      password: "{{ '{{ user_password }}' | password_hash('sha512') }}" 
+      groups: wheel
+      state: present
+      shell: /bin/bash
+      createhome: yes
+      home: "/home/{{ item.username }}"
+    when: "{{ item.uid }} is match('^1')"
+    loop:
+      "{{ users }}"
+  - name: add .ssh directory1
+    file:
+      path: "/home/{{ item.username }}/.ssh"
+      state: directory
+      owner: "{{ item.username }}"
+      group: "{{ item.username }}"
+      mode: '0755'
+    when: "{{ item.uid }} is match('^1')"
+    loop:
+      "{{ users }}"
+  - name: copy the public key1
+    copy:
+      src: "/home/automation/.ssh/id_rsa.pub"
+      dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+      owner: "{{ item.username }}"
+      group: "{{ item.username }}"
+      mode: '0600'
+    when: "{{ item.uid }} is match('^1')"
+    loop:
+      "{{ users }}"
+
+
+
+- name: Users and Groups2
+  hosts: database 
+  become: yes
+
+  tasks: 
+  - include_vars: vars/user_list.yml
+  - include_vars: secret.yml
+  - name: stam2
+    debug:
+      msg: stam, {{ users[0] }}
+  - name: add users2
+    user:
+      name: "{{ item.username }}"
+      uid: "{{ item.uid }}"
+      password: "{{ '{{ user_password }}' | password_hash('sha512') }}" 
+      groups: wheel
+      state: present
+      shell: /bin/bash
+      createhome: yes
+      home: "/home/{{ item.username }}"
+    when: "{{ item.uid }} is match('^2')"
+    loop:
+      "{{ users }}"
+  - name: add .ssh directory2
+    file:
+      path: "/home/{{ item.username }}/.ssh"
+      state: directory
+      owner: "{{ item.username }}"
+      group: "{{ item.username }}"
+      mode: '0755'
+    when: "{{ item.uid }} is match('^2')"
+    loop:
+      "{{ users }}"
+  - name: copy the public key1
+    copy:
+      src: "/home/automation/.ssh/id_rsa.pub"
+      dest: "/home/{{ item.username }}/.ssh/authorized_keys"
+      owner: "{{ item.username }}"
+      group: "{{ item.username }}"
+      mode: '0600'
+    when: "{{ item.uid }} is match('^2')"
+    loop:
+      "{{ users }}"
+
+# we can use block option instead of writting "when" and "loop" after each module

@@ -1,0 +1,22 @@
+---
+all:
+  children:
+    proxy:
+      hosts:
+        10.0.2.7
+    webservers:
+      hosts:
+        10.0.2.[8:9]
+    database:
+      hosts:
+        10.0.2.15
+
+#[proxy]
+#10.0.2.7
+#
+#[webservers]
+#10.0.2.8
+#10.0.2.9
+#
+#[database]
+#10.0.2.15

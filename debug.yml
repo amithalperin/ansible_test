@@ -1,0 +1,8 @@
+---
+- name: first
+  debug:
+    msg: "first {{ out_item }}"
+
+- name: second
+  debug:
+    msg: "second {{ out_item }}"

@@ -1,0 +1,15 @@
+#task8
+---
+- name: Software Repositories
+  hosts: database
+  become: yes
+  
+  tasks:
+  - name: add new repo
+    yum_repository:
+      name: mysql80-community
+      description: MySQL 8.0 YUM Repo
+      baseurl: http://repo.mysql.com/yum/mysql-8.0-community/el/8/x86_64/
+      gpgcakey: http://repo.mysql.com/RPM-GPG-KEY-mysql
+      repo_gpgcheck: true
+      enabled: true

@@ -1,0 +1,16 @@
+---
+- name: Security Task12
+  hosts: webservers
+  become: yes
+  tasks:
+  - name: selinux
+    selinux:
+      policy: targeted
+      state: enforcing
+  - name: enables httpd connect
+    register: selinux_result
+  - name: pass
+    debuge: var=selinux_result
+#    community.general.selinux_permissive:
+#      name: httpd_can_network_connect
+#      permissive: yes

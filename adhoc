@@ -1,0 +1,4 @@
+#task2
+ansible all -m ansible.builtin.user -a "name=automation password=devops"
+ansible all -m ansible.builtin.file -a "dest=/home/automation/.ssh mode=755 owner=automation group=automation state=directory"
+ansible all -m copy -a "src=/home/automation/.ssh/id_rsa.pub dest=/home/automation/.ssh/authorized_keys owner=automation group=automation"

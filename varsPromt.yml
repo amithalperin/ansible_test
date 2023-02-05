@@ -1,0 +1,14 @@
+---
+- hosts: proxy
+  vars_prompt:
+  - name: UserName
+    prompt: enter your username
+    private: false
+    
+  - name: pass
+    prompt: enter your password
+
+  tasks:
+  - name: print
+    debug:
+      msg: 'hello {{ UserName }}'
